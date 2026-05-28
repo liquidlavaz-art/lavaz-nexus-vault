@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Lavaz Unified Nexus & Vault</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* === UNIFIED NEUMORPHIC THEME === */
+        :root {
+            --bg-color: #e0e5ec;
+            --shadow-light: #ffffff;
+            --shadow-dark: #a3b1c6;
+            --accent: #8b5cf6;
+            --lava: #ff3b00;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --status-success: #10B981;
+            --status-warning: #F59E0B;
+            --status-error: #EF4444;
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 32px;
+            --font-main: 'Outfit', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .neo-flat {
+            background: var(--bg-color) !important;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light) !important;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .neo-inset {
+            background: var(--bg-color) !important;
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light) !important;
+            border-radius: 16px;
+            border: none !important;
+        }
+
+        .neo-btn {
+            background: var(--bg-color);
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+        .neo-btn:active, .neo-btn.active {
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light) !important;
+            color: var(--accent);
+        }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+
+        #app-nexus { min-height: 100vh; position: relative; }
+        #app-nexus * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        #app-nexus header {
+            height: 60px;
+            background: var(--bg-color) !important;
+            box-shadow: 0 6px 12px rgba(163, 177, 198, 0.4) !important;
+            border: none !important;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 16px; position: fixed; width: 100%; z-index: 50; top: 0;
+        }
+        #app-nexus .header-logo { font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
+
+        #app-nexus main {
+            padding: 80px 16px 100px 16px;
+            overflow-y: auto; scroll-behavior: smooth;
+        }
+
+        #app-nexus .view { display: none; opacity: 0; }
+        #app-nexus .view.active { display: block; animation: fadeInUp 0.4s ease-out forwards; }
+
+        #app-nexus .card {
+            background: var(--bg-color) !important;
+            box-shadow: 9px 9px 16px var(--shadow-dark), -9px -9px 16px var(--shadow-light) !important;
+            border-radius: var(--radius-md);
+            padding: 16px; margin-bottom: 20px; border: none !important;
+        }
+
+        #app-nexus .input-base {
+            width: 100%; padding: 12px; font-size: 1rem;
+            background: var(--bg-color) !important;
+            box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light) !important;
+            border: none !important; border-radius: var(--radius-sm); color: var(--text-main) !important;
+            margin-bottom: 12px; font-family: var(--font-main);
+        }
+        #app-nexus .input-base:focus { outline: none; box-shadow: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light), 0 0 0 2px rgba(139, 92, 246, 0.3) !important; }
+
+        #app-nexus .btn {
+            background: var(--bg-color) !important;
+            box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light) !important;
+            color: var(--text-main) !important; border: none !important;
+            border-radius: 12px; padding: 12px 20px; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        #app-nexus .btn-sm { padding: 6px 12px; font-size: 0.85rem; }
+        #app-nexus .btn:active { box-shadow: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light) !important; color: var(--accent) !important; }
+
+        #app-nexus .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; height: 64px;
+            background: var(--bg-color) !important;
+            box-shadow: 0 -9px 20px rgba(163, 177, 198, 0.4) !important;
+            border-top: none !important; display: flex; justify-content: space-around; align-items: center; z-index: 50;
+        }
+        #app-nexus .nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: var(--text-muted); width: 16.66%; height: 64px; gap: 4px;
+            background: transparent !important; border: none !important; box-shadow: none !important; cursor: pointer;
+        }
+        #app-nexus .nav-item.active { color: var(--accent); }
+
+        #app-nexus .text-muted { color: var(--text-muted); }
+        #app-nexus .text-accent { color: var(--accent); }
+        #app-nexus h1, #app-nexus h2, #app-nexus h3 { margin: 0 0 8px 0; }
+        #app-nexus .flex-row { display: flex; gap: 12px; align-items: center; }
+        #app-nexus .space-between { justify-content: space-between; }
+        #app-nexus .mb-4 { margin-bottom: 16px; }
+        #app-nexus .mt-4 { margin-top: 16px; }
+    </style>
+</head>
+<body>
+
+<div id="app-nexus">
+    <header>
+        <div class="header-logo">
+            Lavaz <span style="color: var(--accent); font-weight: 400;">Nexus</span>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section id="view-home" class="view active">
+            <h2>Command <span class="text-accent">Center</span></h2>
+            <p class="text-muted mb-4">Offline command center loaded successfully</p>
+
+            <div class="card" style="padding: 24px;">
+                <div style="font-weight: 800; font-size: 1.1rem; margin-bottom: 16px;">Quick Capture</div>
+                <div class="flex-row">
+                    <input type="text" id="quick-input" class="input-base" style="margin:0;" placeholder="Log thought, task, or snippet..." onkeypress="if(event.key === 'Enter') handleQuickCapture()">
+                    <button class="btn btn-sm" style="color: var(--accent) !important; padding: 12px 20px;" onclick="handleQuickCapture()">Log</button>
+                </div>
+            </div>
+
+            <div class="flex-row space-between mb-4 mt-4">
+                <h3 style="font-size: 1.1rem; font-weight: 800;">System Status</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                <div class="neo-flat" style="text-align: center; padding: 16px 8px; border:none; display:flex; flex-direction:column; justify-content:center;">
+                    <div class="text-muted" style="font-size: 0.75rem; font-weight:600;">Projects</div>
+                    <div class="text-accent" style="font-size: 1.8rem; font-weight: 800;">12</div>
+                </div>
+                <div class="neo-flat" style="text-align: center; padding: 16px 8px; border:none; display:flex; flex-direction:column; justify-content:center;">
+                    <div class="text-muted" style="font-size: 0.75rem; font-weight:600;">Prompts</div>
+                    <div class="text-accent" style="font-size: 1.8rem; font-weight: 800;">48</div>
+                </div>
+                <div class="neo-flat" style="text-align: center; padding: 16px 8px; border:none; display:flex; flex-direction:column; justify-content:center;">
+                    <div class="text-muted" style="font-size: 0.75rem; font-weight:600;">Notes</div>
+                    <div class="text-accent" style="font-size: 1.8rem; font-weight: 800;">89</div>
+                </div>
+                <div class="neo-flat" style="text-align: center; padding: 16px 8px; border:none; display:flex; flex-direction:column; justify-content:center;">
+                    <div class="text-muted" style="font-size: 0.75rem; font-weight:600;">Gallery</div>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: var(--lava);">5</div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-top: 32px; margin-bottom: 16px;">Recent Activity</h3>
+            <div id="home-recent-list">
+                <div class="neo-inset" style="padding: 16px; margin-bottom: 12px; border-radius: 16px; font-size: 0.875rem;">✓ Lavaz Nexus loaded successfully on Android</div>
+            </div>
+        </section>
+
+        <section id="view-console" class="view">
+            <h2>Output <span class="text-accent">Console</span></h2>
+            <p class="text-muted mb-4">Compile and view payloads</p>
+            <div class="card">
+                <p>Console features coming soon...</p>
+            </div>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchView('view-home')" style="border:none; background:none;">
+            <span style="font-size:1.4rem;">🏠</span><span style="font-size: 0.75rem;">Home</span>
+        </button>
+        <button class="nav-item" onclick="switchView('view-console')" style="border:none; background:none;">
+            <span style="font-size:1.4rem;">💻</span><span style="font-size: 0.75rem;">Console</span>
+        </button>
+    </nav>
+</div>
+
+<script>
+    function switchView(viewId) {
+        document.querySelectorAll('#app-nexus .view').forEach(v => v.classList.remove('active'));
+        const targetView = document.getElementById(viewId);
+        if(targetView) targetView.classList.add('active');
+        
+        document.querySelectorAll('#app-nexus .nav-item').forEach(btn => btn.classList.remove('active'));
+        event.target.closest('.nav-item').classList.add('active');
+    }
+
+    function handleQuickCapture() {
+        const val = document.getElementById('quick-input').value;
+        if(!val) return;
+        const container = document.getElementById('home-recent-list');
+        const newItem = document.createElement('div');
+        newItem.className = 'neo-flat';
+        newItem.style.cssText = 'padding: 16px; margin-bottom: 12px; border-radius: 16px; font-size: 0.875rem; color: var(--accent); font-weight: 600;';
+        newItem.textContent = '✓ Captured: ' + val;
+        container.insertBefore(newItem, container.firstChild);
+        document.getElementById('quick-input').value = '';
+    }
+</script>
+
+</body>
+</html>
