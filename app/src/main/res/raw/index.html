@@ -122,7 +122,7 @@
         }
         #app-nexus .nav-item {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: var(--text-muted); width: 16.66%; height: 64px; gap: 4px;
+            color: var(--text-muted); width: 20%; height: 64px; gap: 4px;
             background: transparent !important; border: none !important; box-shadow: none !important; cursor: pointer;
         }
         #app-nexus .nav-item.active { color: var(--accent); }
@@ -148,7 +148,7 @@
     <main id="main-content">
         <section id="view-home" class="view active">
             <h2>Command <span class="text-accent">Center</span></h2>
-            <p class="text-muted mb-4">Offline command center loaded successfully</p>
+            <p class="text-muted mb-4">Unified offline command hub</p>
 
             <div class="card" style="padding: 24px;">
                 <div style="font-weight: 800; font-size: 1.1rem; margin-bottom: 16px;">Quick Capture</div>
@@ -175,14 +175,24 @@
                     <div class="text-accent" style="font-size: 1.8rem; font-weight: 800;">89</div>
                 </div>
                 <div class="neo-flat" style="text-align: center; padding: 16px 8px; border:none; display:flex; flex-direction:column; justify-content:center;">
-                    <div class="text-muted" style="font-size: 0.75rem; font-weight:600;">Gallery</div>
-                    <div style="font-size: 1.8rem; font-weight: 800; color: var(--lava);">5</div>
+                    <div class="text-muted" style="font-size: 0.75rem; font-weight:600;">Timezones</div>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: var(--lava);">22</div>
                 </div>
             </div>
 
             <h3 style="font-size: 1.1rem; font-weight: 800; margin-top: 32px; margin-bottom: 16px;">Recent Activity</h3>
             <div id="home-recent-list">
-                <div class="neo-inset" style="padding: 16px; margin-bottom: 12px; border-radius: 16px; font-size: 0.875rem;">✓ Lavaz Nexus loaded successfully on Android</div>
+                <div class="neo-inset" style="padding: 16px; margin-bottom: 12px; border-radius: 16px; font-size: 0.875rem;">✓ Multi-timezone clock feature loaded</div>
+            </div>
+        </section>
+
+        <section id="view-clock" class="view">
+            <h2>⏰ <span class="text-accent">Multi-Timezone Clock</span></h2>
+            <p class="text-muted mb-4">Track time across the world</p>
+            
+            <div class="card" style="text-align: center; padding: 24px;">
+                <p style="color: var(--text-muted); margin-bottom: 16px;">Open clock.html in your browser for full interactive experience</p>
+                <button class="btn" style="color: var(--accent) !important;" onclick="alert('Clock feature: Visit app root for full experience')">🌍 Launch Clock</button>
             </div>
         </section>
 
@@ -196,10 +206,13 @@
     </main>
 
     <nav class="bottom-nav">
-        <button class="nav-item active" onclick="switchView('view-home')" style="border:none; background:none;">
+        <button class="nav-item active" onclick="switchView('view-home')">
             <span style="font-size:1.4rem;">🏠</span><span style="font-size: 0.75rem;">Home</span>
         </button>
-        <button class="nav-item" onclick="switchView('view-console')" style="border:none; background:none;">
+        <button class="nav-item" onclick="switchView('view-clock')">
+            <span style="font-size:1.4rem;">⏰</span><span style="font-size: 0.75rem;">Clock</span>
+        </button>
+        <button class="nav-item" onclick="switchView('view-console')">
             <span style="font-size:1.4rem;">💻</span><span style="font-size: 0.75rem;">Console</span>
         </button>
     </nav>
